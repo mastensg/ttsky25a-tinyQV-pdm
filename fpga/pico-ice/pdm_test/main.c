@@ -13,7 +13,7 @@ volatile uint32_t* pdm_ctrl = (volatile uint32_t*)0x8000280;
 volatile uint32_t* pdm_clkp = (volatile uint32_t*)0x8000284;
 volatile uint32_t* pdm_pcmw = (volatile uint32_t*)0x8000288;
 
-static int64_t sample_counter = 0;
+static uint32_t sample_counter = 0;
 
 void tqv_user_interrupt10(void) {
 
