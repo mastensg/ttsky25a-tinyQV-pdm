@@ -1,4 +1,4 @@
-PROJECT_NAME ?= vga
+PROJECT_NAME ?= pdm_test
 
 PROJECT_SOURCES ?= main.c
 
