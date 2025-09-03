@@ -247,7 +247,7 @@ module tinyQV_peripherals #(parameter CLOCK_MHZ=64) (
         .user_interrupt(user_interrupts[6])
     );
 
-    tqvp_toivoh_pwl_synth i_user_peri07 (
+    tqvp_full_empty i_user_peri07 (
         .clk(clk),
         .rst_n(rst_n),
 
@@ -304,7 +304,7 @@ module tinyQV_peripherals #(parameter CLOCK_MHZ=64) (
         .user_interrupt(user_interrupts[9])
     );
 
-    tqvp_full_empty i_user_peri10 (
+    tqvp_jnms_pdm i_pdm10 (
         .clk(clk),
         .rst_n(rst_n),
 
@@ -399,7 +399,7 @@ module tinyQV_peripherals #(parameter CLOCK_MHZ=64) (
         .user_interrupt(user_interrupts[14])
     );
 
-    tqvp_full_example i_user_peri15 (
+    tqvp_full_empty i_user_peri15 (
         .clk(clk),
         .rst_n(rst_n),
 
@@ -452,7 +452,7 @@ module tinyQV_peripherals #(parameter CLOCK_MHZ=64) (
         .data_out(data_from_simple_peri[1])
     );
 
-    tqvp_cattuto_ws2812b_driver #(.CLOCK_MHZ(CLOCK_MHZ)) i_cattuto_ws2812b_driver02 (
+    tqvp_byte_empty i_cattuto_ws2812b_driver02 (
         .clk(clk),
         .rst_n(rst_n),
 
