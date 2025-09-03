@@ -1,11 +1,11 @@
 #include <stddef.h>
 #include <gpio.h>
+#include <timer.h>
 #include <stdio.h>
 #include <csr.h>
 #include <uart.h>
 
 #define printf uart_printf
-
 
 // PDM audio input
 // base address is 0x800_0280 (0x800_0000 + 0x40*10)
@@ -46,11 +46,18 @@ int main(void) {
     static uint32_t previous_status = 0;
     // Main loop
     while (1) {
-        const uint32_t tick_us = read_time();
-
-        if ((tick_us - previous_status) > 1000000) {
-            printf("loop-status time_ms=%d sample_counter=%d \n", tick_us/1000, sample_counter);
-            previous_status = tick_us;
+#if 1
+        // Manually compensate for running on 14 Mhz instead of 64 Mhz
+        const uint32_t tick_ms = read_time()*64/(14*1000);
+#else
+        // XXX: no output in this case
+        const uint32_t tick_ms = get_mtime()/1000;
+#endif
+        if ((tick_ms - previous_status) > 3000) {
+            // NOTE: 3rd argument to printf not interpolated, just gives 0
+            printf("loop-status time_ms=%d rate=%d sample_counter=%d \n",
+                tick_ms, sample_counter/(tick_ms/1000), sample_counter);
+            previous_status = tick_ms;
         }
     }
 
