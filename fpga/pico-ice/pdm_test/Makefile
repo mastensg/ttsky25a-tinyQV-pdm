@@ -23,7 +23,7 @@ clean:
 %.o: %.s
 	$(AS) -march=rv32ec_zicsr_zcb_zicond -mabi=ilp32e $< -o $@
 
-$(PROJECT_NAME).elf: $(PROJECT_SOURCES:.c=.o)
+$(PROJECT_NAME).elf: $(PROJECT_SOURCES:.c=.o) isr.o
 	$(LD) $^ $(TINYQV_SDK)/start.o $(TINYQV_SDK)/tinyQV.a $(RISCV_TOOLCHAIN)/riscv32-unknown-elf/lib/libc.a $(RISCV_TOOLCHAIN)/lib/gcc/riscv32-unknown-elf/*/libgcc.a  -T $(TINYQV_SDK)/memmap --gc-sections -o $@
 
 $(PROJECT_NAME).bin: $(PROJECT_NAME).elf
