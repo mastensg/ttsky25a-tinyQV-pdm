@@ -10,7 +10,7 @@ AR = $(RISCV_TOOLCHAIN)/bin/riscv32-unknown-elf-ar
 LD = $(RISCV_TOOLCHAIN)/bin/riscv32-unknown-elf-ld
 OBJCOPY = $(RISCV_TOOLCHAIN)/bin/riscv32-unknown-elf-objcopy
 
-TINYQV_SDK ?= ../../tinyQV-sdk
+TINYQV_SDK ?= ../../../../tinyQV-sdk
 
 all: $(PROJECT_NAME).bin $(PROJECT_NAME).hex
 
