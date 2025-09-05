@@ -15,8 +15,9 @@ volatile uint32_t* pdm_clkp = (volatile uint32_t*)0x8000284;
 volatile uint32_t* pdm_pcmw = (volatile uint32_t*)0x8000288;
 volatile uint16_t* pdm_pcmw16 = (volatile uint16_t*)0x8000288;
 volatile uint8_t* pdm_pcmw8 = (volatile uint8_t*)0x8000288;
+volatile uint32_t* pdm_select = (volatile uint32_t*)0x800028c;
 
-#define BUFFER_LENGTH 100000
+#define BUFFER_LENGTH 1000
 volatile int16_t buffer[BUFFER_LENGTH];
 volatile uint32_t buffer_idx;
 
@@ -36,6 +37,7 @@ int main(void) {
     	    buffer[i] = 22222;
 
     *pdm_clkp = 14;
+    *pdm_select = 1;
     *pdm_ctrl = 1;
 
     uint32_t t0 = read_time();
@@ -45,7 +47,7 @@ int main(void) {
 
     enable_interrupt(10);
 
-    while (buffer_idx < 90000)
+    while (buffer_idx < 900)
 	    ;
     *pdm_ctrl = 0;
 
