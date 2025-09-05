@@ -10,12 +10,12 @@
 
 // PDM audio input
 // base address is 0x800_0280 (0x800_0000 + 0x40*10)
-volatile uint32_t* pdm_ctrl = (volatile uint32_t*)0x8000280;
-volatile uint32_t* pdm_clkp = (volatile uint32_t*)0x8000284;
-volatile uint32_t* pdm_pcmw = (volatile uint32_t*)0x8000288;
-volatile uint16_t* pdm_pcmw16 = (volatile uint16_t*)0x8000288;
-volatile uint8_t* pdm_pcmw8 = (volatile uint8_t*)0x8000288;
-volatile uint32_t* pdm_select = (volatile uint32_t*)0x800028c;
+volatile uint32_t* pdm_enable = (volatile uint32_t*)0x8000280;
+volatile uint32_t* pdm_period = (volatile uint32_t*)0x8000284;
+volatile uint32_t* pdm_select = (volatile uint32_t*)0x8000288;
+volatile uint32_t* pdm_sample = (volatile uint32_t*)0x800028c;
+volatile uint16_t* pdm_sample16 = (volatile uint16_t*)0x800028c;
+volatile uint8_t* pdm_sample8 = (volatile uint8_t*)0x800028c;
 
 #define BUFFER_LENGTH 1000
 volatile int16_t buffer[BUFFER_LENGTH];
@@ -36,9 +36,9 @@ int main(void) {
     for(int i=0; i<BUFFER_LENGTH; ++i)
     	    buffer[i] = 22222;
 
-    *pdm_clkp = 14;
-    *pdm_select = 1;
-    *pdm_ctrl = 1;
+    *pdm_period = 14;
+    *pdm_select = 0;
+    *pdm_enable = 1;
 
     uint32_t t0 = read_time();
     uint32_t t1 = t0 + 100 * 1000;
@@ -49,7 +49,7 @@ int main(void) {
 
     while (buffer_idx < 900)
 	    ;
-    *pdm_ctrl = 0;
+    *pdm_enable = 0;
 
     printf("BEGIN\n");
     for(int i=0; i<BUFFER_LENGTH; i+=8) {

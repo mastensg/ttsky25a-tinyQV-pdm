@@ -18,7 +18,7 @@ tqv_user_interrupt10_raw:
 	addi	a1,	a1,	1
 	#andi	a1,	a1,	2047
 	sw	a1,	0(a0)
-	lw	a0,	0x0288(tp)
+	lw	a0,	0x028c(tp)
 	#li	a0,	11111
 	sh	a0,	0(s1)
 
