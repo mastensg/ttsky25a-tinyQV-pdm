@@ -16,11 +16,11 @@ tqv_user_interrupt10_raw:
 	add	s1,	s1,	a1
 	add	s1,	s1,	a1
 	addi	a1,	a1,	1
-	sh	a1,	0(s1)
-	andi	a1,	a1,	63
+	#andi	a1,	a1,	2047
 	sw	a1,	0(a0)
 	lw	a0,	0x0288(tp)
-	sh	a1,	0(s1)
+	#li	a0,	11111
+	sh	a0,	0(s1)
 
 	# out 4 lo
 	li	a0,	0

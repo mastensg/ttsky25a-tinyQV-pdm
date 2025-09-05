@@ -16,12 +16,12 @@ volatile uint32_t* pdm_pcmw = (volatile uint32_t*)0x8000288;
 volatile uint16_t* pdm_pcmw16 = (volatile uint16_t*)0x8000288;
 volatile uint8_t* pdm_pcmw8 = (volatile uint8_t*)0x8000288;
 
-#define BUFFER_LENGTH 64
+#define BUFFER_LENGTH 100000
 volatile int16_t buffer[BUFFER_LENGTH];
 volatile uint32_t buffer_idx;
 
 int main(void) {
-    printf("main\n");
+    printf("\n-----------------------------------\n");
 
     // Set all outputs to regular mode (not debug)
     set_debug_sel(0xff);
@@ -32,21 +32,30 @@ int main(void) {
     // Set all output 6 to peripheral 10
     set_gpio_func(6, 10);
 
-    enable_interrupt(10);
+    for(int i=0; i<BUFFER_LENGTH; ++i)
+    	    buffer[i] = 22222;
 
     *pdm_clkp = 14;
     *pdm_ctrl = 1;
 
-    printf("sampling...");
-    //while (!buffer[BUFFER_LENGTH-1])
-    while (buffer_idx < 60)
+    uint32_t t0 = read_time();
+    uint32_t t1 = t0 + 100 * 1000;
+    while (read_time() < t1)
     	    ;
-    printf("stopping...");
+
+    enable_interrupt(10);
+
+    while (buffer_idx < 90000)
+	    ;
     *pdm_ctrl = 0;
 
     printf("BEGIN\n");
-    for(int i=0; i<BUFFER_LENGTH; ++i)
-	    printf("%6d\n", buffer[i]);
+    for(int i=0; i<BUFFER_LENGTH; i+=8) {
+	    for(int j=0; j<8; ++j) {
+		    printf("%6d", buffer[i+j]);
+	    }
+	    printf("\n");
+    }
     printf("END\n");
 
     for(;;)
